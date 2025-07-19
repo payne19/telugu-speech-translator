@@ -183,8 +183,4 @@ if st.button("🔁 Reset App"):
     st.session_state.to_go = False
     st.session_state.genai_api_key = None
     st.session_state.voice_clip_data = None
-    try:
-        localS.deleteItem("genai_api_key")
-    except:
-        pass
     st.rerun()
