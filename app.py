@@ -61,7 +61,7 @@ if "voice_clip_data" not in st.session_state:
 
 def get_api_key():
 
-    api_key = st.text_input(
+    streamlit_genai_key = st.text_input(
         label="Enter your GenAI API Key",
         type="password",
         key="genai_api_key_input",
