@@ -59,6 +59,12 @@ if "genai_api_key" not in st.session_state:
 if "voice_clip_data" not in st.session_state:
     st.session_state.voice_clip_data = None
 
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
+
+def click_button():
+    st.session_state.clicked = True
+    
 def get_api_key():
 
     streamlit_genai_key = st.text_input(
@@ -68,8 +74,8 @@ def get_api_key():
         help="Enter your GenAI API Key to use the service."
     )
 
-    if st.button("Submit API Key"):
-        if streamlit_genai_key:
+    if st.button("Submit API Key", on_click=click_button)):
+        if st.session_state.clicked:
             st.session_state.genai_api_key = streamlit_genai_key
             localS.setItem("genai_api_key", streamlit_genai_key)
             
