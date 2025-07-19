@@ -60,8 +60,6 @@ if "voice_clip_data" not in st.session_state:
     st.session_state.voice_clip_data = None
 
 def get_api_key():
-    if "submitted_api_key" not in st.session_state:
-        st.session_state.submitted_api_key = False
 
     api_key = st.text_input(
         label="Enter your GenAI API Key",
@@ -70,29 +68,11 @@ def get_api_key():
         help="Enter your GenAI API Key to use the service."
     )
 
-    save_key = st.radio(
-        "Remember my API key in this browser (not recommended on shared devices)",
-        ["Yes", "No"],
-        index=1,
-        key="save_api_key_radio"
-    )
-
     if st.button("Submit API Key"):
-        st.session_state.submitted_api_key = True
-
-    if st.session_state.submitted_api_key:
-        if api_key:
-            st.session_state.genai_api_key = api_key
-
-            if save_key == "Yes":
-                st.success("API key saved (hypothetically) to browser storage.")
-            else:
-                st.info("API key will be used only for this session.")
-
-            st.session_state.submitted_api_key = False
-        else:
-            st.warning("Please enter a valid API key.")
-
+        if streamlit_genai_key:
+            st.session_state.genai_api_key = streamlit_genai_key
+            localS.setItem("genai_api_key", streamlit_genai_key)
+            
 try:
     stored_key = localS.getItem("genai_api_key")
     if stored_key and stored_key.get("value"):
